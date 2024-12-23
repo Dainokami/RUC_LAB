@@ -1,0 +1,133 @@
+PrimaryExp -> Number
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+ConstInitVal -> ConstExp
+ConstDef -> Ident = CIV
+ConstDecl -> const int ConstDef {, ConstDef};
+Decl -> ConstDecl
+oCompUnit -> Decl
+CompUnit -> CompUnit {CompUnit}
+Lval -> Ident{'['Exp']'}
+PrimaryExp -> LVal
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+ConstArrayIndex -> [ ConstExp ]
+VarDef -> Ident {'['ConstExp']'}
+VarDecl -> int
+Decl -> VarDecl
+oCompUnit -> Decl
+CompUnit -> CompUnit {CompUnit}
+oB -> {'['Exp']'}
+FuncFParam -> INT Ident ['['']' {'['Exp']'}]
+FuncFParams -> FuncFParam {, FuncFParam}
+Lval -> Ident{'['Exp']'}
+PrimaryExp -> LVal
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+RelExp -> AddExp
+EqExp -> RelExp
+PrimaryExp -> Number
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+RelExp -> AddExp
+EqExp -> EqExp == RelExp
+LAndExp -> EqExpLOrExp -> LAndExpLval -> Ident{'['Exp']'}
+PrimaryExp -> LVal
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+RelExp -> AddExp
+EqExp -> RelExp
+PrimaryExp -> Number
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+RelExp -> AddExp
+EqExp -> EqExp == RelExp
+LAndExp -> EqExpLOrExp -> LOrExp || LAndExpCond -> LOrExp
+PrimaryExp -> Number
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+Stmt -> return Exp;
+Lval -> Ident{'['Exp']'}
+PrimaryExp -> LVal
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+PrimaryExp -> Number
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> AddExp - MulExp
+Exp -> AddExp
+FuncRParams -> Exp {, Exp}
+UnaryExp -> Ident '('FuncRParams')'
+MulExp -> UnaryExp
+AddExp -> MulExp
+Lval -> Ident{'['Exp']'}
+PrimaryExp -> LVal
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+PrimaryExp -> Number
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> AddExp - MulExp
+Exp -> AddExp
+FuncRParams -> Exp {, Exp}
+UnaryExp -> Ident '('FuncRParams')'
+MulExp -> UnaryExp
+AddExp -> AddExp + MulExp
+Exp -> AddExp
+Stmt -> return Exp;
+Stmt -> if '('Cond')' Stmt else Stmt
+BlockItem -> Stmt BlockItem
+Block -> '{' {BlockItem} '}'
+FuncDef -> int IDENT '(' FuncFParams ')' Block
+oCompUnit -> FuncDef
+CompUnit -> CompUnit {CompUnit}
+PrimaryExp -> Number
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+VarDef -> Ident {'['ConstExp']'} = InitVal
+VarDecl -> int
+Decl -> VarDecl
+PrimaryExp -> Number
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+ooB -> '['EXP']'
+Lval -> Ident{'['Exp']'}
+Lval -> Ident{'['Exp']'}
+PrimaryExp -> LVal
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+PrimaryExp -> Number
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> AddExp + MulExp
+Exp -> AddExp
+FuncRParams -> Exp {, Exp}
+UnaryExp -> Ident '('FuncRParams')'
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+Stmt -> LVal = Exp;
+BlockItem -> Stmt BlockItem
+BlockItem -> Decl BlockItem
+Block -> '{' {BlockItem} '}'
+FuncDef -> int main '('')' Block
+oCompUnit -> FuncDef
+CompUnit -> CompUnit {CompUnit}

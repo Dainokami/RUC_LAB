@@ -1,0 +1,15 @@
+int main(){
+    int b[10][10][10],a;
+    b[2][2][2]=010;
+    int test=21474836472147483647;
+    int test=0xabcde;
+    int 666bbb666;
+    int aaa111aaa;
+    a=b[2][2][2];
+    while(a>0){
+        a=a-1;
+        if(a==5)
+            break;
+    }
+    return a;
+}

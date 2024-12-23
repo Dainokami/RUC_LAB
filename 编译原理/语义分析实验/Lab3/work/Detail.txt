@@ -1,0 +1,12 @@
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+Stmt -> return Exp ;
+BlockItem -> Stmt
+Blocks -> BlockItem
+Block -> { Blocks }
+FuncDef -> int Ident ( ) Block
+OtherCompUnit -> FuncDef
+CompUnits -> OtherCompUnit

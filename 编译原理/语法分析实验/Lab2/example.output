@@ -1,0 +1,2978 @@
+Terminals unused in grammar
+
+   ERROR
+
+
+Grammar
+
+    0 $accept: CompUnit $end
+
+    1 CompUnit: OtherCompUnit
+    2         | CompUnit OtherCompUnit
+
+    3 OtherCompUnit: Decl
+    4              | FuncDef
+
+    5 Decl: ConstDecl
+    6     | VarDecl
+
+    7 ConstDecl: CONST INT ConstDef ';'
+    8          | CONST INT error ';'
+
+    9 ConstDef: OtherConstDef
+   10         | ConstDef ',' OtherConstDef
+
+   11 OtherConstDef: Ident '=' ConstInitVal
+   12              | Ident ConstArrIdex '=' ConstInitVal
+   13              | WrongIdent '=' ConstInitVal
+   14              | WrongIdent ConstArrIdex '=' ConstInitVal
+
+   15 ConstArrIdex: '[' ConstExp ']'
+   16             | ConstArrIdex '[' ConstExp ']'
+
+   17 ConstInitVal: ConstExp
+   18             | '{' '}'
+   19             | '{' OtherConstInitVal '}'
+
+   20 OtherConstInitVal: ConstInitVal
+   21                  | OtherConstInitVal ',' ConstInitVal
+
+   22 VarDecl: INT VarDef ';'
+
+   23 VarDef: OtherVarDef
+   24       | VarDef ',' OtherVarDef
+
+   25 OtherVarDef: Ident
+   26            | Ident VarArrIdex
+   27            | Ident '=' InitVal
+   28            | Ident VarArrIdex '=' InitVal
+   29            | WrongIdent
+   30            | WrongIdent VarArrIdex
+   31            | WrongIdent '=' InitVal
+   32            | WrongIdent VarArrIdex '=' InitVal
+
+   33 VarArrIdex: '[' ConstExp ']'
+   34           | VarArrIdex '[' ConstExp ']'
+
+   35 InitVal: Exp
+   36        | '{' '}'
+   37        | '{' OtherVarInitVal '}'
+
+   38 OtherVarInitVal: InitVal
+   39                | OtherVarInitVal ',' InitVal
+
+   40 FuncDef: VOID Ident '(' ')' Block
+   41        | INT Ident '(' ')' Block
+   42        | VOID Ident '(' FuncFParams ')' Block
+   43        | INT Ident '(' FuncFParams ')' Block
+   44        | VOID Ident '(' error ')' Block
+   45        | INT Ident '(' error ')' Block
+   46        | VOID WrongIdent '(' ')' Block
+   47        | INT WrongIdent '(' ')' Block
+   48        | VOID WrongIdent '(' FuncFParams ')' Block
+   49        | INT WrongIdent '(' FuncFParams ')' Block
+   50        | VOID WrongIdent '(' error ')' Block
+   51        | INT WrongIdent '(' error ')' Block
+
+   52 FuncFParams: FuncFParam
+   53            | FuncFParams ',' FuncFParam
+
+   54 FuncFParam: INT Ident
+   55           | INT Ident '[' ']'
+   56           | INT Ident '[' ']' LExp
+   57           | INT WrongIdent
+   58           | INT WrongIdent '[' ']'
+   59           | INT WrongIdent '[' ']' LExp
+
+   60 LExp: '[' Exp ']'
+   61     | LExp '[' Exp ']'
+
+   62 Block: '{' '}'
+   63      | '{' Blocks '}'
+
+   64 Blocks: BlockItem
+   65       | Blocks BlockItem
+
+   66 BlockItem: Decl
+   67          | Stmt
+
+   68 Stmt: LVal '=' Exp ';'
+   69     | Exp ';'
+   70     | ';'
+   71     | Block
+   72     | IF '(' Cond ')' Stmt
+   73     | IF '(' Cond ')' Stmt ELSE Stmt
+   74     | WHILE '(' Cond ')' Stmt
+   75     | BREAK ';'
+   76     | CONTINUE ';'
+   77     | RETURN Exp ';'
+   78     | RETURN ';'
+
+   79 Exp: AddExp
+
+   80 Cond: LOrExp
+
+   81 LVal: Ident
+   82     | Ident LExp
+   83     | WrongIdent
+   84     | WrongIdent LExp
+
+   85 PrimaryExp: '(' Exp ')'
+   86           | LVal
+   87           | INTCONST
+
+   88 UnaryExp: PrimaryExp
+   89         | Ident '(' ')'
+   90         | Ident '(' FuncRParams ')'
+   91         | WrongIdent '(' ')'
+   92         | WrongIdent '(' FuncRParams ')'
+   93         | '+' UnaryExp
+   94         | '-' UnaryExp
+   95         | '!' UnaryExp
+
+   96 FuncRParams: Exp
+   97            | FuncRParams ',' Exp
+
+   98 MulExp: UnaryExp
+   99       | MulExp '*' UnaryExp
+  100       | MulExp '/' UnaryExp
+  101       | MulExp '%' UnaryExp
+
+  102 AddExp: MulExp
+  103       | AddExp '+' MulExp
+  104       | AddExp '-' MulExp
+
+  105 RelExp: AddExp
+  106       | RelExp '<' AddExp
+  107       | RelExp '>' AddExp
+  108       | RelExp GEQ AddExp
+  109       | RelExp LEQ AddExp
+
+  110 EqExp: RelExp
+  111      | EqExp EQ RelExp
+  112      | EqExp NEQ RelExp
+
+  113 LAndExp: EqExp
+  114        | LAndExp AND EqExp
+
+  115 LOrExp: LAndExp
+  116       | LOrExp OR LAndExp
+
+  117 ConstExp: AddExp
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'!' (33) 95
+'%' (37) 101
+'(' (40) 40 41 42 43 44 45 46 47 48 49 50 51 72 73 74 85 89 90 91 92
+')' (41) 40 41 42 43 44 45 46 47 48 49 50 51 72 73 74 85 89 90 91 92
+'*' (42) 99
+'+' (43) 93 103
+',' (44) 10 21 24 39 53 97
+'-' (45) 94 104
+'/' (47) 100
+';' (59) 7 8 22 68 69 70 75 76 77 78
+'<' (60) 106
+'=' (61) 11 12 13 14 27 28 31 32 68
+'>' (62) 107
+'[' (91) 15 16 33 34 55 56 58 59 60 61
+']' (93) 15 16 33 34 55 56 58 59 60 61
+'{' (123) 18 19 36 37 62 63
+'}' (125) 18 19 36 37 62 63
+error (256) 8 44 45 50 51
+CONST (258) 7 8
+INT (259) 7 8 22 41 43 45 47 49 51 54 55 56 57 58 59
+VOID (260) 40 42 44 46 48 50
+IF (261) 72 73
+WHILE (262) 74
+BREAK (263) 75
+CONTINUE (264) 76
+RETURN (265) 77 78
+Ident (266) 11 12 25 26 27 28 40 41 42 43 44 45 54 55 56 81 82 89 90
+WrongIdent (267) 13 14 29 30 31 32 46 47 48 49 50 51 57 58 59 83 84
+    91 92
+INTCONST (268) 87
+AND (269) 114
+OR (270) 116
+ERROR (271)
+LOWER_THAN_ELSE (272)
+ELSE (273) 73
+LEQ (274) 109
+GEQ (275) 108
+NEQ (276) 112
+EQ (277) 111
+
+
+Nonterminals, with rules where they appear
+
+$accept (40)
+    on left: 0
+CompUnit (41)
+    on left: 1 2, on right: 0 2
+OtherCompUnit (42)
+    on left: 3 4, on right: 1 2
+Decl (43)
+    on left: 5 6, on right: 3 66
+ConstDecl (44)
+    on left: 7 8, on right: 5
+ConstDef (45)
+    on left: 9 10, on right: 7 10
+OtherConstDef (46)
+    on left: 11 12 13 14, on right: 9 10
+ConstArrIdex (47)
+    on left: 15 16, on right: 12 14 16
+ConstInitVal (48)
+    on left: 17 18 19, on right: 11 12 13 14 20 21
+OtherConstInitVal (49)
+    on left: 20 21, on right: 19 21
+VarDecl (50)
+    on left: 22, on right: 6
+VarDef (51)
+    on left: 23 24, on right: 22 24
+OtherVarDef (52)
+    on left: 25 26 27 28 29 30 31 32, on right: 23 24
+VarArrIdex (53)
+    on left: 33 34, on right: 26 28 30 32 34
+InitVal (54)
+    on left: 35 36 37, on right: 27 28 31 32 38 39
+OtherVarInitVal (55)
+    on left: 38 39, on right: 37 39
+FuncDef (56)
+    on left: 40 41 42 43 44 45 46 47 48 49 50 51, on right: 4
+FuncFParams (57)
+    on left: 52 53, on right: 42 43 48 49 53
+FuncFParam (58)
+    on left: 54 55 56 57 58 59, on right: 52 53
+LExp (59)
+    on left: 60 61, on right: 56 59 61 82 84
+Block (60)
+    on left: 62 63, on right: 40 41 42 43 44 45 46 47 48 49 50 51 71
+Blocks (61)
+    on left: 64 65, on right: 63 65
+BlockItem (62)
+    on left: 66 67, on right: 64 65
+Stmt (63)
+    on left: 68 69 70 71 72 73 74 75 76 77 78, on right: 67 72 73 74
+Exp (64)
+    on left: 79, on right: 35 60 61 68 69 77 85 96 97
+Cond (65)
+    on left: 80, on right: 72 73 74
+LVal (66)
+    on left: 81 82 83 84, on right: 68 86
+PrimaryExp (67)
+    on left: 85 86 87, on right: 88
+UnaryExp (68)
+    on left: 88 89 90 91 92 93 94 95, on right: 93 94 95 98 99 100
+    101
+FuncRParams (69)
+    on left: 96 97, on right: 90 92 97
+MulExp (70)
+    on left: 98 99 100 101, on right: 99 100 101 102 103 104
+AddExp (71)
+    on left: 102 103 104, on right: 79 103 104 105 106 107 108 109
+    117
+RelExp (72)
+    on left: 105 106 107 108 109, on right: 106 107 108 109 110 111
+    112
+EqExp (73)
+    on left: 110 111 112, on right: 111 112 113 114
+LAndExp (74)
+    on left: 113 114, on right: 114 115 116
+LOrExp (75)
+    on left: 115 116, on right: 80 116
+ConstExp (76)
+    on left: 117, on right: 15 16 17 33 34
+
+
+State 0
+
+    0 $accept: . CompUnit $end
+
+    CONST  shift, and go to state 1
+    INT    shift, and go to state 2
+    VOID   shift, and go to state 3
+
+    CompUnit       go to state 4
+    OtherCompUnit  go to state 5
+    Decl           go to state 6
+    ConstDecl      go to state 7
+    VarDecl        go to state 8
+    FuncDef        go to state 9
+
+
+State 1
+
+    7 ConstDecl: CONST . INT ConstDef ';'
+    8          | CONST . INT error ';'
+
+    INT  shift, and go to state 10
+
+
+State 2
+
+   22 VarDecl: INT . VarDef ';'
+   41 FuncDef: INT . Ident '(' ')' Block
+   43        | INT . Ident '(' FuncFParams ')' Block
+   45        | INT . Ident '(' error ')' Block
+   47        | INT . WrongIdent '(' ')' Block
+   49        | INT . WrongIdent '(' FuncFParams ')' Block
+   51        | INT . WrongIdent '(' error ')' Block
+
+    Ident       shift, and go to state 11
+    WrongIdent  shift, and go to state 12
+
+    VarDef       go to state 13
+    OtherVarDef  go to state 14
+
+
+State 3
+
+   40 FuncDef: VOID . Ident '(' ')' Block
+   42        | VOID . Ident '(' FuncFParams ')' Block
+   44        | VOID . Ident '(' error ')' Block
+   46        | VOID . WrongIdent '(' ')' Block
+   48        | VOID . WrongIdent '(' FuncFParams ')' Block
+   50        | VOID . WrongIdent '(' error ')' Block
+
+    Ident       shift, and go to state 15
+    WrongIdent  shift, and go to state 16
+
+
+State 4
+
+    0 $accept: CompUnit . $end
+    2 CompUnit: CompUnit . OtherCompUnit
+
+    $end   shift, and go to state 17
+    CONST  shift, and go to state 1
+    INT    shift, and go to state 2
+    VOID   shift, and go to state 3
+
+    OtherCompUnit  go to state 18
+    Decl           go to state 6
+    ConstDecl      go to state 7
+    VarDecl        go to state 8
+    FuncDef        go to state 9
+
+
+State 5
+
+    1 CompUnit: OtherCompUnit .
+
+    $default  reduce using rule 1 (CompUnit)
+
+
+State 6
+
+    3 OtherCompUnit: Decl .
+
+    $default  reduce using rule 3 (OtherCompUnit)
+
+
+State 7
+
+    5 Decl: ConstDecl .
+
+    $default  reduce using rule 5 (Decl)
+
+
+State 8
+
+    6 Decl: VarDecl .
+
+    $default  reduce using rule 6 (Decl)
+
+
+State 9
+
+    4 OtherCompUnit: FuncDef .
+
+    $default  reduce using rule 4 (OtherCompUnit)
+
+
+State 10
+
+    7 ConstDecl: CONST INT . ConstDef ';'
+    8          | CONST INT . error ';'
+
+    error       shift, and go to state 19
+    Ident       shift, and go to state 20
+    WrongIdent  shift, and go to state 21
+
+    ConstDef       go to state 22
+    OtherConstDef  go to state 23
+
+
+State 11
+
+   25 OtherVarDef: Ident .
+   26            | Ident . VarArrIdex
+   27            | Ident . '=' InitVal
+   28            | Ident . VarArrIdex '=' InitVal
+   41 FuncDef: INT Ident . '(' ')' Block
+   43        | INT Ident . '(' FuncFParams ')' Block
+   45        | INT Ident . '(' error ')' Block
+
+    '='  shift, and go to state 24
+    '['  shift, and go to state 25
+    '('  shift, and go to state 26
+
+    $default  reduce using rule 25 (OtherVarDef)
+
+    VarArrIdex  go to state 27
+
+
+State 12
+
+   29 OtherVarDef: WrongIdent .
+   30            | WrongIdent . VarArrIdex
+   31            | WrongIdent . '=' InitVal
+   32            | WrongIdent . VarArrIdex '=' InitVal
+   47 FuncDef: INT WrongIdent . '(' ')' Block
+   49        | INT WrongIdent . '(' FuncFParams ')' Block
+   51        | INT WrongIdent . '(' error ')' Block
+
+    '='  shift, and go to state 28
+    '['  shift, and go to state 25
+    '('  shift, and go to state 29
+
+    $default  reduce using rule 29 (OtherVarDef)
+
+    VarArrIdex  go to state 30
+
+
+State 13
+
+   22 VarDecl: INT VarDef . ';'
+   24 VarDef: VarDef . ',' OtherVarDef
+
+    ';'  shift, and go to state 31
+    ','  shift, and go to state 32
+
+
+State 14
+
+   23 VarDef: OtherVarDef .
+
+    $default  reduce using rule 23 (VarDef)
+
+
+State 15
+
+   40 FuncDef: VOID Ident . '(' ')' Block
+   42        | VOID Ident . '(' FuncFParams ')' Block
+   44        | VOID Ident . '(' error ')' Block
+
+    '('  shift, and go to state 33
+
+
+State 16
+
+   46 FuncDef: VOID WrongIdent . '(' ')' Block
+   48        | VOID WrongIdent . '(' FuncFParams ')' Block
+   50        | VOID WrongIdent . '(' error ')' Block
+
+    '('  shift, and go to state 34
+
+
+State 17
+
+    0 $accept: CompUnit $end .
+
+    $default  accept
+
+
+State 18
+
+    2 CompUnit: CompUnit OtherCompUnit .
+
+    $default  reduce using rule 2 (CompUnit)
+
+
+State 19
+
+    8 ConstDecl: CONST INT error . ';'
+
+    ';'  shift, and go to state 35
+
+
+State 20
+
+   11 OtherConstDef: Ident . '=' ConstInitVal
+   12              | Ident . ConstArrIdex '=' ConstInitVal
+
+    '='  shift, and go to state 36
+    '['  shift, and go to state 37
+
+    ConstArrIdex  go to state 38
+
+
+State 21
+
+   13 OtherConstDef: WrongIdent . '=' ConstInitVal
+   14              | WrongIdent . ConstArrIdex '=' ConstInitVal
+
+    '='  shift, and go to state 39
+    '['  shift, and go to state 37
+
+    ConstArrIdex  go to state 40
+
+
+State 22
+
+    7 ConstDecl: CONST INT ConstDef . ';'
+   10 ConstDef: ConstDef . ',' OtherConstDef
+
+    ';'  shift, and go to state 41
+    ','  shift, and go to state 42
+
+
+State 23
+
+    9 ConstDef: OtherConstDef .
+
+    $default  reduce using rule 9 (ConstDef)
+
+
+State 24
+
+   27 OtherVarDef: Ident '=' . InitVal
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '{'         shift, and go to state 48
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    InitVal     go to state 51
+    Exp         go to state 52
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 25
+
+   33 VarArrIdex: '[' . ConstExp ']'
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 58
+    ConstExp    go to state 59
+
+
+State 26
+
+   41 FuncDef: INT Ident '(' . ')' Block
+   43        | INT Ident '(' . FuncFParams ')' Block
+   45        | INT Ident '(' . error ')' Block
+
+    error  shift, and go to state 60
+    INT    shift, and go to state 61
+    ')'    shift, and go to state 62
+
+    FuncFParams  go to state 63
+    FuncFParam   go to state 64
+
+
+State 27
+
+   26 OtherVarDef: Ident VarArrIdex .
+   28            | Ident VarArrIdex . '=' InitVal
+   34 VarArrIdex: VarArrIdex . '[' ConstExp ']'
+
+    '='  shift, and go to state 65
+    '['  shift, and go to state 66
+
+    $default  reduce using rule 26 (OtherVarDef)
+
+
+State 28
+
+   31 OtherVarDef: WrongIdent '=' . InitVal
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '{'         shift, and go to state 48
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    InitVal     go to state 67
+    Exp         go to state 52
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 29
+
+   47 FuncDef: INT WrongIdent '(' . ')' Block
+   49        | INT WrongIdent '(' . FuncFParams ')' Block
+   51        | INT WrongIdent '(' . error ')' Block
+
+    error  shift, and go to state 68
+    INT    shift, and go to state 61
+    ')'    shift, and go to state 69
+
+    FuncFParams  go to state 70
+    FuncFParam   go to state 64
+
+
+State 30
+
+   30 OtherVarDef: WrongIdent VarArrIdex .
+   32            | WrongIdent VarArrIdex . '=' InitVal
+   34 VarArrIdex: VarArrIdex . '[' ConstExp ']'
+
+    '='  shift, and go to state 71
+    '['  shift, and go to state 66
+
+    $default  reduce using rule 30 (OtherVarDef)
+
+
+State 31
+
+   22 VarDecl: INT VarDef ';' .
+
+    $default  reduce using rule 22 (VarDecl)
+
+
+State 32
+
+   24 VarDef: VarDef ',' . OtherVarDef
+
+    Ident       shift, and go to state 72
+    WrongIdent  shift, and go to state 73
+
+    OtherVarDef  go to state 74
+
+
+State 33
+
+   40 FuncDef: VOID Ident '(' . ')' Block
+   42        | VOID Ident '(' . FuncFParams ')' Block
+   44        | VOID Ident '(' . error ')' Block
+
+    error  shift, and go to state 75
+    INT    shift, and go to state 61
+    ')'    shift, and go to state 76
+
+    FuncFParams  go to state 77
+    FuncFParam   go to state 64
+
+
+State 34
+
+   46 FuncDef: VOID WrongIdent '(' . ')' Block
+   48        | VOID WrongIdent '(' . FuncFParams ')' Block
+   50        | VOID WrongIdent '(' . error ')' Block
+
+    error  shift, and go to state 78
+    INT    shift, and go to state 61
+    ')'    shift, and go to state 79
+
+    FuncFParams  go to state 80
+    FuncFParam   go to state 64
+
+
+State 35
+
+    8 ConstDecl: CONST INT error ';' .
+
+    $default  reduce using rule 8 (ConstDecl)
+
+
+State 36
+
+   11 OtherConstDef: Ident '=' . ConstInitVal
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '{'         shift, and go to state 81
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    ConstInitVal  go to state 82
+    LVal          go to state 53
+    PrimaryExp    go to state 54
+    UnaryExp      go to state 55
+    MulExp        go to state 56
+    AddExp        go to state 58
+    ConstExp      go to state 83
+
+
+State 37
+
+   15 ConstArrIdex: '[' . ConstExp ']'
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 58
+    ConstExp    go to state 84
+
+
+State 38
+
+   12 OtherConstDef: Ident ConstArrIdex . '=' ConstInitVal
+   16 ConstArrIdex: ConstArrIdex . '[' ConstExp ']'
+
+    '='  shift, and go to state 85
+    '['  shift, and go to state 86
+
+
+State 39
+
+   13 OtherConstDef: WrongIdent '=' . ConstInitVal
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '{'         shift, and go to state 81
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    ConstInitVal  go to state 87
+    LVal          go to state 53
+    PrimaryExp    go to state 54
+    UnaryExp      go to state 55
+    MulExp        go to state 56
+    AddExp        go to state 58
+    ConstExp      go to state 83
+
+
+State 40
+
+   14 OtherConstDef: WrongIdent ConstArrIdex . '=' ConstInitVal
+   16 ConstArrIdex: ConstArrIdex . '[' ConstExp ']'
+
+    '='  shift, and go to state 88
+    '['  shift, and go to state 86
+
+
+State 41
+
+    7 ConstDecl: CONST INT ConstDef ';' .
+
+    $default  reduce using rule 7 (ConstDecl)
+
+
+State 42
+
+   10 ConstDef: ConstDef ',' . OtherConstDef
+
+    Ident       shift, and go to state 20
+    WrongIdent  shift, and go to state 21
+
+    OtherConstDef  go to state 89
+
+
+State 43
+
+   81 LVal: Ident .
+   82     | Ident . LExp
+   89 UnaryExp: Ident . '(' ')'
+   90         | Ident . '(' FuncRParams ')'
+
+    '['  shift, and go to state 90
+    '('  shift, and go to state 91
+
+    $default  reduce using rule 81 (LVal)
+
+    LExp  go to state 92
+
+
+State 44
+
+   83 LVal: WrongIdent .
+   84     | WrongIdent . LExp
+   91 UnaryExp: WrongIdent . '(' ')'
+   92         | WrongIdent . '(' FuncRParams ')'
+
+    '['  shift, and go to state 90
+    '('  shift, and go to state 93
+
+    $default  reduce using rule 83 (LVal)
+
+    LExp  go to state 94
+
+
+State 45
+
+   87 PrimaryExp: INTCONST .
+
+    $default  reduce using rule 87 (PrimaryExp)
+
+
+State 46
+
+   93 UnaryExp: '+' . UnaryExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 95
+
+
+State 47
+
+   94 UnaryExp: '-' . UnaryExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 96
+
+
+State 48
+
+   36 InitVal: '{' . '}'
+   37        | '{' . OtherVarInitVal '}'
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '{'         shift, and go to state 48
+    '}'         shift, and go to state 97
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    InitVal          go to state 98
+    OtherVarInitVal  go to state 99
+    Exp              go to state 52
+    LVal             go to state 53
+    PrimaryExp       go to state 54
+    UnaryExp         go to state 55
+    MulExp           go to state 56
+    AddExp           go to state 57
+
+
+State 49
+
+   85 PrimaryExp: '(' . Exp ')'
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    Exp         go to state 100
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 50
+
+   95 UnaryExp: '!' . UnaryExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 101
+
+
+State 51
+
+   27 OtherVarDef: Ident '=' InitVal .
+
+    $default  reduce using rule 27 (OtherVarDef)
+
+
+State 52
+
+   35 InitVal: Exp .
+
+    $default  reduce using rule 35 (InitVal)
+
+
+State 53
+
+   86 PrimaryExp: LVal .
+
+    $default  reduce using rule 86 (PrimaryExp)
+
+
+State 54
+
+   88 UnaryExp: PrimaryExp .
+
+    $default  reduce using rule 88 (UnaryExp)
+
+
+State 55
+
+   98 MulExp: UnaryExp .
+
+    $default  reduce using rule 98 (MulExp)
+
+
+State 56
+
+   99 MulExp: MulExp . '*' UnaryExp
+  100       | MulExp . '/' UnaryExp
+  101       | MulExp . '%' UnaryExp
+  102 AddExp: MulExp .
+
+    '*'  shift, and go to state 102
+    '/'  shift, and go to state 103
+    '%'  shift, and go to state 104
+
+    $default  reduce using rule 102 (AddExp)
+
+
+State 57
+
+   79 Exp: AddExp .
+  103 AddExp: AddExp . '+' MulExp
+  104       | AddExp . '-' MulExp
+
+    '+'  shift, and go to state 105
+    '-'  shift, and go to state 106
+
+    $default  reduce using rule 79 (Exp)
+
+
+State 58
+
+  103 AddExp: AddExp . '+' MulExp
+  104       | AddExp . '-' MulExp
+  117 ConstExp: AddExp .
+
+    '+'  shift, and go to state 105
+    '-'  shift, and go to state 106
+
+    $default  reduce using rule 117 (ConstExp)
+
+
+State 59
+
+   33 VarArrIdex: '[' ConstExp . ']'
+
+    ']'  shift, and go to state 107
+
+
+State 60
+
+   45 FuncDef: INT Ident '(' error . ')' Block
+
+    ')'  shift, and go to state 108
+
+
+State 61
+
+   54 FuncFParam: INT . Ident
+   55           | INT . Ident '[' ']'
+   56           | INT . Ident '[' ']' LExp
+   57           | INT . WrongIdent
+   58           | INT . WrongIdent '[' ']'
+   59           | INT . WrongIdent '[' ']' LExp
+
+    Ident       shift, and go to state 109
+    WrongIdent  shift, and go to state 110
+
+
+State 62
+
+   41 FuncDef: INT Ident '(' ')' . Block
+
+    '{'  shift, and go to state 111
+
+    Block  go to state 112
+
+
+State 63
+
+   43 FuncDef: INT Ident '(' FuncFParams . ')' Block
+   53 FuncFParams: FuncFParams . ',' FuncFParam
+
+    ','  shift, and go to state 113
+    ')'  shift, and go to state 114
+
+
+State 64
+
+   52 FuncFParams: FuncFParam .
+
+    $default  reduce using rule 52 (FuncFParams)
+
+
+State 65
+
+   28 OtherVarDef: Ident VarArrIdex '=' . InitVal
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '{'         shift, and go to state 48
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    InitVal     go to state 115
+    Exp         go to state 52
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 66
+
+   34 VarArrIdex: VarArrIdex '[' . ConstExp ']'
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 58
+    ConstExp    go to state 116
+
+
+State 67
+
+   31 OtherVarDef: WrongIdent '=' InitVal .
+
+    $default  reduce using rule 31 (OtherVarDef)
+
+
+State 68
+
+   51 FuncDef: INT WrongIdent '(' error . ')' Block
+
+    ')'  shift, and go to state 117
+
+
+State 69
+
+   47 FuncDef: INT WrongIdent '(' ')' . Block
+
+    '{'  shift, and go to state 111
+
+    Block  go to state 118
+
+
+State 70
+
+   49 FuncDef: INT WrongIdent '(' FuncFParams . ')' Block
+   53 FuncFParams: FuncFParams . ',' FuncFParam
+
+    ','  shift, and go to state 113
+    ')'  shift, and go to state 119
+
+
+State 71
+
+   32 OtherVarDef: WrongIdent VarArrIdex '=' . InitVal
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '{'         shift, and go to state 48
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    InitVal     go to state 120
+    Exp         go to state 52
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 72
+
+   25 OtherVarDef: Ident .
+   26            | Ident . VarArrIdex
+   27            | Ident . '=' InitVal
+   28            | Ident . VarArrIdex '=' InitVal
+
+    '='  shift, and go to state 24
+    '['  shift, and go to state 25
+
+    $default  reduce using rule 25 (OtherVarDef)
+
+    VarArrIdex  go to state 27
+
+
+State 73
+
+   29 OtherVarDef: WrongIdent .
+   30            | WrongIdent . VarArrIdex
+   31            | WrongIdent . '=' InitVal
+   32            | WrongIdent . VarArrIdex '=' InitVal
+
+    '='  shift, and go to state 28
+    '['  shift, and go to state 25
+
+    $default  reduce using rule 29 (OtherVarDef)
+
+    VarArrIdex  go to state 30
+
+
+State 74
+
+   24 VarDef: VarDef ',' OtherVarDef .
+
+    $default  reduce using rule 24 (VarDef)
+
+
+State 75
+
+   44 FuncDef: VOID Ident '(' error . ')' Block
+
+    ')'  shift, and go to state 121
+
+
+State 76
+
+   40 FuncDef: VOID Ident '(' ')' . Block
+
+    '{'  shift, and go to state 111
+
+    Block  go to state 122
+
+
+State 77
+
+   42 FuncDef: VOID Ident '(' FuncFParams . ')' Block
+   53 FuncFParams: FuncFParams . ',' FuncFParam
+
+    ','  shift, and go to state 113
+    ')'  shift, and go to state 123
+
+
+State 78
+
+   50 FuncDef: VOID WrongIdent '(' error . ')' Block
+
+    ')'  shift, and go to state 124
+
+
+State 79
+
+   46 FuncDef: VOID WrongIdent '(' ')' . Block
+
+    '{'  shift, and go to state 111
+
+    Block  go to state 125
+
+
+State 80
+
+   48 FuncDef: VOID WrongIdent '(' FuncFParams . ')' Block
+   53 FuncFParams: FuncFParams . ',' FuncFParam
+
+    ','  shift, and go to state 113
+    ')'  shift, and go to state 126
+
+
+State 81
+
+   18 ConstInitVal: '{' . '}'
+   19             | '{' . OtherConstInitVal '}'
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '{'         shift, and go to state 81
+    '}'         shift, and go to state 127
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    ConstInitVal       go to state 128
+    OtherConstInitVal  go to state 129
+    LVal               go to state 53
+    PrimaryExp         go to state 54
+    UnaryExp           go to state 55
+    MulExp             go to state 56
+    AddExp             go to state 58
+    ConstExp           go to state 83
+
+
+State 82
+
+   11 OtherConstDef: Ident '=' ConstInitVal .
+
+    $default  reduce using rule 11 (OtherConstDef)
+
+
+State 83
+
+   17 ConstInitVal: ConstExp .
+
+    $default  reduce using rule 17 (ConstInitVal)
+
+
+State 84
+
+   15 ConstArrIdex: '[' ConstExp . ']'
+
+    ']'  shift, and go to state 130
+
+
+State 85
+
+   12 OtherConstDef: Ident ConstArrIdex '=' . ConstInitVal
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '{'         shift, and go to state 81
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    ConstInitVal  go to state 131
+    LVal          go to state 53
+    PrimaryExp    go to state 54
+    UnaryExp      go to state 55
+    MulExp        go to state 56
+    AddExp        go to state 58
+    ConstExp      go to state 83
+
+
+State 86
+
+   16 ConstArrIdex: ConstArrIdex '[' . ConstExp ']'
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 58
+    ConstExp    go to state 132
+
+
+State 87
+
+   13 OtherConstDef: WrongIdent '=' ConstInitVal .
+
+    $default  reduce using rule 13 (OtherConstDef)
+
+
+State 88
+
+   14 OtherConstDef: WrongIdent ConstArrIdex '=' . ConstInitVal
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '{'         shift, and go to state 81
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    ConstInitVal  go to state 133
+    LVal          go to state 53
+    PrimaryExp    go to state 54
+    UnaryExp      go to state 55
+    MulExp        go to state 56
+    AddExp        go to state 58
+    ConstExp      go to state 83
+
+
+State 89
+
+   10 ConstDef: ConstDef ',' OtherConstDef .
+
+    $default  reduce using rule 10 (ConstDef)
+
+
+State 90
+
+   60 LExp: '[' . Exp ']'
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    Exp         go to state 134
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 91
+
+   89 UnaryExp: Ident '(' . ')'
+   90         | Ident '(' . FuncRParams ')'
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    ')'         shift, and go to state 135
+    '!'         shift, and go to state 50
+
+    Exp          go to state 136
+    LVal         go to state 53
+    PrimaryExp   go to state 54
+    UnaryExp     go to state 55
+    FuncRParams  go to state 137
+    MulExp       go to state 56
+    AddExp       go to state 57
+
+
+State 92
+
+   61 LExp: LExp . '[' Exp ']'
+   82 LVal: Ident LExp .
+
+    '['  shift, and go to state 138
+
+    $default  reduce using rule 82 (LVal)
+
+
+State 93
+
+   91 UnaryExp: WrongIdent '(' . ')'
+   92         | WrongIdent '(' . FuncRParams ')'
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    ')'         shift, and go to state 139
+    '!'         shift, and go to state 50
+
+    Exp          go to state 136
+    LVal         go to state 53
+    PrimaryExp   go to state 54
+    UnaryExp     go to state 55
+    FuncRParams  go to state 140
+    MulExp       go to state 56
+    AddExp       go to state 57
+
+
+State 94
+
+   61 LExp: LExp . '[' Exp ']'
+   84 LVal: WrongIdent LExp .
+
+    '['  shift, and go to state 138
+
+    $default  reduce using rule 84 (LVal)
+
+
+State 95
+
+   93 UnaryExp: '+' UnaryExp .
+
+    $default  reduce using rule 93 (UnaryExp)
+
+
+State 96
+
+   94 UnaryExp: '-' UnaryExp .
+
+    $default  reduce using rule 94 (UnaryExp)
+
+
+State 97
+
+   36 InitVal: '{' '}' .
+
+    $default  reduce using rule 36 (InitVal)
+
+
+State 98
+
+   38 OtherVarInitVal: InitVal .
+
+    $default  reduce using rule 38 (OtherVarInitVal)
+
+
+State 99
+
+   37 InitVal: '{' OtherVarInitVal . '}'
+   39 OtherVarInitVal: OtherVarInitVal . ',' InitVal
+
+    ','  shift, and go to state 141
+    '}'  shift, and go to state 142
+
+
+State 100
+
+   85 PrimaryExp: '(' Exp . ')'
+
+    ')'  shift, and go to state 143
+
+
+State 101
+
+   95 UnaryExp: '!' UnaryExp .
+
+    $default  reduce using rule 95 (UnaryExp)
+
+
+State 102
+
+   99 MulExp: MulExp '*' . UnaryExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 144
+
+
+State 103
+
+  100 MulExp: MulExp '/' . UnaryExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 145
+
+
+State 104
+
+  101 MulExp: MulExp '%' . UnaryExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 146
+
+
+State 105
+
+  103 AddExp: AddExp '+' . MulExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 147
+
+
+State 106
+
+  104 AddExp: AddExp '-' . MulExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 148
+
+
+State 107
+
+   33 VarArrIdex: '[' ConstExp ']' .
+
+    $default  reduce using rule 33 (VarArrIdex)
+
+
+State 108
+
+   45 FuncDef: INT Ident '(' error ')' . Block
+
+    '{'  shift, and go to state 111
+
+    Block  go to state 149
+
+
+State 109
+
+   54 FuncFParam: INT Ident .
+   55           | INT Ident . '[' ']'
+   56           | INT Ident . '[' ']' LExp
+
+    '['  shift, and go to state 150
+
+    $default  reduce using rule 54 (FuncFParam)
+
+
+State 110
+
+   57 FuncFParam: INT WrongIdent .
+   58           | INT WrongIdent . '[' ']'
+   59           | INT WrongIdent . '[' ']' LExp
+
+    '['  shift, and go to state 151
+
+    $default  reduce using rule 57 (FuncFParam)
+
+
+State 111
+
+   62 Block: '{' . '}'
+   63      | '{' . Blocks '}'
+
+    CONST       shift, and go to state 1
+    INT         shift, and go to state 152
+    IF          shift, and go to state 153
+    WHILE       shift, and go to state 154
+    BREAK       shift, and go to state 155
+    CONTINUE    shift, and go to state 156
+    RETURN      shift, and go to state 157
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    ';'         shift, and go to state 158
+    '{'         shift, and go to state 111
+    '}'         shift, and go to state 159
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    Decl        go to state 160
+    ConstDecl   go to state 7
+    VarDecl     go to state 8
+    Block       go to state 161
+    Blocks      go to state 162
+    BlockItem   go to state 163
+    Stmt        go to state 164
+    Exp         go to state 165
+    LVal        go to state 166
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 112
+
+   41 FuncDef: INT Ident '(' ')' Block .
+
+    $default  reduce using rule 41 (FuncDef)
+
+
+State 113
+
+   53 FuncFParams: FuncFParams ',' . FuncFParam
+
+    INT  shift, and go to state 61
+
+    FuncFParam  go to state 167
+
+
+State 114
+
+   43 FuncDef: INT Ident '(' FuncFParams ')' . Block
+
+    '{'  shift, and go to state 111
+
+    Block  go to state 168
+
+
+State 115
+
+   28 OtherVarDef: Ident VarArrIdex '=' InitVal .
+
+    $default  reduce using rule 28 (OtherVarDef)
+
+
+State 116
+
+   34 VarArrIdex: VarArrIdex '[' ConstExp . ']'
+
+    ']'  shift, and go to state 169
+
+
+State 117
+
+   51 FuncDef: INT WrongIdent '(' error ')' . Block
+
+    '{'  shift, and go to state 111
+
+    Block  go to state 170
+
+
+State 118
+
+   47 FuncDef: INT WrongIdent '(' ')' Block .
+
+    $default  reduce using rule 47 (FuncDef)
+
+
+State 119
+
+   49 FuncDef: INT WrongIdent '(' FuncFParams ')' . Block
+
+    '{'  shift, and go to state 111
+
+    Block  go to state 171
+
+
+State 120
+
+   32 OtherVarDef: WrongIdent VarArrIdex '=' InitVal .
+
+    $default  reduce using rule 32 (OtherVarDef)
+
+
+State 121
+
+   44 FuncDef: VOID Ident '(' error ')' . Block
+
+    '{'  shift, and go to state 111
+
+    Block  go to state 172
+
+
+State 122
+
+   40 FuncDef: VOID Ident '(' ')' Block .
+
+    $default  reduce using rule 40 (FuncDef)
+
+
+State 123
+
+   42 FuncDef: VOID Ident '(' FuncFParams ')' . Block
+
+    '{'  shift, and go to state 111
+
+    Block  go to state 173
+
+
+State 124
+
+   50 FuncDef: VOID WrongIdent '(' error ')' . Block
+
+    '{'  shift, and go to state 111
+
+    Block  go to state 174
+
+
+State 125
+
+   46 FuncDef: VOID WrongIdent '(' ')' Block .
+
+    $default  reduce using rule 46 (FuncDef)
+
+
+State 126
+
+   48 FuncDef: VOID WrongIdent '(' FuncFParams ')' . Block
+
+    '{'  shift, and go to state 111
+
+    Block  go to state 175
+
+
+State 127
+
+   18 ConstInitVal: '{' '}' .
+
+    $default  reduce using rule 18 (ConstInitVal)
+
+
+State 128
+
+   20 OtherConstInitVal: ConstInitVal .
+
+    $default  reduce using rule 20 (OtherConstInitVal)
+
+
+State 129
+
+   19 ConstInitVal: '{' OtherConstInitVal . '}'
+   21 OtherConstInitVal: OtherConstInitVal . ',' ConstInitVal
+
+    ','  shift, and go to state 176
+    '}'  shift, and go to state 177
+
+
+State 130
+
+   15 ConstArrIdex: '[' ConstExp ']' .
+
+    $default  reduce using rule 15 (ConstArrIdex)
+
+
+State 131
+
+   12 OtherConstDef: Ident ConstArrIdex '=' ConstInitVal .
+
+    $default  reduce using rule 12 (OtherConstDef)
+
+
+State 132
+
+   16 ConstArrIdex: ConstArrIdex '[' ConstExp . ']'
+
+    ']'  shift, and go to state 178
+
+
+State 133
+
+   14 OtherConstDef: WrongIdent ConstArrIdex '=' ConstInitVal .
+
+    $default  reduce using rule 14 (OtherConstDef)
+
+
+State 134
+
+   60 LExp: '[' Exp . ']'
+
+    ']'  shift, and go to state 179
+
+
+State 135
+
+   89 UnaryExp: Ident '(' ')' .
+
+    $default  reduce using rule 89 (UnaryExp)
+
+
+State 136
+
+   96 FuncRParams: Exp .
+
+    $default  reduce using rule 96 (FuncRParams)
+
+
+State 137
+
+   90 UnaryExp: Ident '(' FuncRParams . ')'
+   97 FuncRParams: FuncRParams . ',' Exp
+
+    ','  shift, and go to state 180
+    ')'  shift, and go to state 181
+
+
+State 138
+
+   61 LExp: LExp '[' . Exp ']'
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    Exp         go to state 182
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 139
+
+   91 UnaryExp: WrongIdent '(' ')' .
+
+    $default  reduce using rule 91 (UnaryExp)
+
+
+State 140
+
+   92 UnaryExp: WrongIdent '(' FuncRParams . ')'
+   97 FuncRParams: FuncRParams . ',' Exp
+
+    ','  shift, and go to state 180
+    ')'  shift, and go to state 183
+
+
+State 141
+
+   39 OtherVarInitVal: OtherVarInitVal ',' . InitVal
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '{'         shift, and go to state 48
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    InitVal     go to state 184
+    Exp         go to state 52
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 142
+
+   37 InitVal: '{' OtherVarInitVal '}' .
+
+    $default  reduce using rule 37 (InitVal)
+
+
+State 143
+
+   85 PrimaryExp: '(' Exp ')' .
+
+    $default  reduce using rule 85 (PrimaryExp)
+
+
+State 144
+
+   99 MulExp: MulExp '*' UnaryExp .
+
+    $default  reduce using rule 99 (MulExp)
+
+
+State 145
+
+  100 MulExp: MulExp '/' UnaryExp .
+
+    $default  reduce using rule 100 (MulExp)
+
+
+State 146
+
+  101 MulExp: MulExp '%' UnaryExp .
+
+    $default  reduce using rule 101 (MulExp)
+
+
+State 147
+
+   99 MulExp: MulExp . '*' UnaryExp
+  100       | MulExp . '/' UnaryExp
+  101       | MulExp . '%' UnaryExp
+  103 AddExp: AddExp '+' MulExp .
+
+    '*'  shift, and go to state 102
+    '/'  shift, and go to state 103
+    '%'  shift, and go to state 104
+
+    $default  reduce using rule 103 (AddExp)
+
+
+State 148
+
+   99 MulExp: MulExp . '*' UnaryExp
+  100       | MulExp . '/' UnaryExp
+  101       | MulExp . '%' UnaryExp
+  104 AddExp: AddExp '-' MulExp .
+
+    '*'  shift, and go to state 102
+    '/'  shift, and go to state 103
+    '%'  shift, and go to state 104
+
+    $default  reduce using rule 104 (AddExp)
+
+
+State 149
+
+   45 FuncDef: INT Ident '(' error ')' Block .
+
+    $default  reduce using rule 45 (FuncDef)
+
+
+State 150
+
+   55 FuncFParam: INT Ident '[' . ']'
+   56           | INT Ident '[' . ']' LExp
+
+    ']'  shift, and go to state 185
+
+
+State 151
+
+   58 FuncFParam: INT WrongIdent '[' . ']'
+   59           | INT WrongIdent '[' . ']' LExp
+
+    ']'  shift, and go to state 186
+
+
+State 152
+
+   22 VarDecl: INT . VarDef ';'
+
+    Ident       shift, and go to state 72
+    WrongIdent  shift, and go to state 73
+
+    VarDef       go to state 13
+    OtherVarDef  go to state 14
+
+
+State 153
+
+   72 Stmt: IF . '(' Cond ')' Stmt
+   73     | IF . '(' Cond ')' Stmt ELSE Stmt
+
+    '('  shift, and go to state 187
+
+
+State 154
+
+   74 Stmt: WHILE . '(' Cond ')' Stmt
+
+    '('  shift, and go to state 188
+
+
+State 155
+
+   75 Stmt: BREAK . ';'
+
+    ';'  shift, and go to state 189
+
+
+State 156
+
+   76 Stmt: CONTINUE . ';'
+
+    ';'  shift, and go to state 190
+
+
+State 157
+
+   77 Stmt: RETURN . Exp ';'
+   78     | RETURN . ';'
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    ';'         shift, and go to state 191
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    Exp         go to state 192
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 158
+
+   70 Stmt: ';' .
+
+    $default  reduce using rule 70 (Stmt)
+
+
+State 159
+
+   62 Block: '{' '}' .
+
+    $default  reduce using rule 62 (Block)
+
+
+State 160
+
+   66 BlockItem: Decl .
+
+    $default  reduce using rule 66 (BlockItem)
+
+
+State 161
+
+   71 Stmt: Block .
+
+    $default  reduce using rule 71 (Stmt)
+
+
+State 162
+
+   63 Block: '{' Blocks . '}'
+   65 Blocks: Blocks . BlockItem
+
+    CONST       shift, and go to state 1
+    INT         shift, and go to state 152
+    IF          shift, and go to state 153
+    WHILE       shift, and go to state 154
+    BREAK       shift, and go to state 155
+    CONTINUE    shift, and go to state 156
+    RETURN      shift, and go to state 157
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    ';'         shift, and go to state 158
+    '{'         shift, and go to state 111
+    '}'         shift, and go to state 193
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    Decl        go to state 160
+    ConstDecl   go to state 7
+    VarDecl     go to state 8
+    Block       go to state 161
+    BlockItem   go to state 194
+    Stmt        go to state 164
+    Exp         go to state 165
+    LVal        go to state 166
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 163
+
+   64 Blocks: BlockItem .
+
+    $default  reduce using rule 64 (Blocks)
+
+
+State 164
+
+   67 BlockItem: Stmt .
+
+    $default  reduce using rule 67 (BlockItem)
+
+
+State 165
+
+   69 Stmt: Exp . ';'
+
+    ';'  shift, and go to state 195
+
+
+State 166
+
+   68 Stmt: LVal . '=' Exp ';'
+   86 PrimaryExp: LVal .
+
+    '='  shift, and go to state 196
+
+    $default  reduce using rule 86 (PrimaryExp)
+
+
+State 167
+
+   53 FuncFParams: FuncFParams ',' FuncFParam .
+
+    $default  reduce using rule 53 (FuncFParams)
+
+
+State 168
+
+   43 FuncDef: INT Ident '(' FuncFParams ')' Block .
+
+    $default  reduce using rule 43 (FuncDef)
+
+
+State 169
+
+   34 VarArrIdex: VarArrIdex '[' ConstExp ']' .
+
+    $default  reduce using rule 34 (VarArrIdex)
+
+
+State 170
+
+   51 FuncDef: INT WrongIdent '(' error ')' Block .
+
+    $default  reduce using rule 51 (FuncDef)
+
+
+State 171
+
+   49 FuncDef: INT WrongIdent '(' FuncFParams ')' Block .
+
+    $default  reduce using rule 49 (FuncDef)
+
+
+State 172
+
+   44 FuncDef: VOID Ident '(' error ')' Block .
+
+    $default  reduce using rule 44 (FuncDef)
+
+
+State 173
+
+   42 FuncDef: VOID Ident '(' FuncFParams ')' Block .
+
+    $default  reduce using rule 42 (FuncDef)
+
+
+State 174
+
+   50 FuncDef: VOID WrongIdent '(' error ')' Block .
+
+    $default  reduce using rule 50 (FuncDef)
+
+
+State 175
+
+   48 FuncDef: VOID WrongIdent '(' FuncFParams ')' Block .
+
+    $default  reduce using rule 48 (FuncDef)
+
+
+State 176
+
+   21 OtherConstInitVal: OtherConstInitVal ',' . ConstInitVal
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '{'         shift, and go to state 81
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    ConstInitVal  go to state 197
+    LVal          go to state 53
+    PrimaryExp    go to state 54
+    UnaryExp      go to state 55
+    MulExp        go to state 56
+    AddExp        go to state 58
+    ConstExp      go to state 83
+
+
+State 177
+
+   19 ConstInitVal: '{' OtherConstInitVal '}' .
+
+    $default  reduce using rule 19 (ConstInitVal)
+
+
+State 178
+
+   16 ConstArrIdex: ConstArrIdex '[' ConstExp ']' .
+
+    $default  reduce using rule 16 (ConstArrIdex)
+
+
+State 179
+
+   60 LExp: '[' Exp ']' .
+
+    $default  reduce using rule 60 (LExp)
+
+
+State 180
+
+   97 FuncRParams: FuncRParams ',' . Exp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    Exp         go to state 198
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 181
+
+   90 UnaryExp: Ident '(' FuncRParams ')' .
+
+    $default  reduce using rule 90 (UnaryExp)
+
+
+State 182
+
+   61 LExp: LExp '[' Exp . ']'
+
+    ']'  shift, and go to state 199
+
+
+State 183
+
+   92 UnaryExp: WrongIdent '(' FuncRParams ')' .
+
+    $default  reduce using rule 92 (UnaryExp)
+
+
+State 184
+
+   39 OtherVarInitVal: OtherVarInitVal ',' InitVal .
+
+    $default  reduce using rule 39 (OtherVarInitVal)
+
+
+State 185
+
+   55 FuncFParam: INT Ident '[' ']' .
+   56           | INT Ident '[' ']' . LExp
+
+    '['  shift, and go to state 90
+
+    $default  reduce using rule 55 (FuncFParam)
+
+    LExp  go to state 200
+
+
+State 186
+
+   58 FuncFParam: INT WrongIdent '[' ']' .
+   59           | INT WrongIdent '[' ']' . LExp
+
+    '['  shift, and go to state 90
+
+    $default  reduce using rule 58 (FuncFParam)
+
+    LExp  go to state 201
+
+
+State 187
+
+   72 Stmt: IF '(' . Cond ')' Stmt
+   73     | IF '(' . Cond ')' Stmt ELSE Stmt
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    Cond        go to state 202
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 203
+    RelExp      go to state 204
+    EqExp       go to state 205
+    LAndExp     go to state 206
+    LOrExp      go to state 207
+
+
+State 188
+
+   74 Stmt: WHILE '(' . Cond ')' Stmt
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    Cond        go to state 208
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 203
+    RelExp      go to state 204
+    EqExp       go to state 205
+    LAndExp     go to state 206
+    LOrExp      go to state 207
+
+
+State 189
+
+   75 Stmt: BREAK ';' .
+
+    $default  reduce using rule 75 (Stmt)
+
+
+State 190
+
+   76 Stmt: CONTINUE ';' .
+
+    $default  reduce using rule 76 (Stmt)
+
+
+State 191
+
+   78 Stmt: RETURN ';' .
+
+    $default  reduce using rule 78 (Stmt)
+
+
+State 192
+
+   77 Stmt: RETURN Exp . ';'
+
+    ';'  shift, and go to state 209
+
+
+State 193
+
+   63 Block: '{' Blocks '}' .
+
+    $default  reduce using rule 63 (Block)
+
+
+State 194
+
+   65 Blocks: Blocks BlockItem .
+
+    $default  reduce using rule 65 (Blocks)
+
+
+State 195
+
+   69 Stmt: Exp ';' .
+
+    $default  reduce using rule 69 (Stmt)
+
+
+State 196
+
+   68 Stmt: LVal '=' . Exp ';'
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    Exp         go to state 210
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 197
+
+   21 OtherConstInitVal: OtherConstInitVal ',' ConstInitVal .
+
+    $default  reduce using rule 21 (OtherConstInitVal)
+
+
+State 198
+
+   97 FuncRParams: FuncRParams ',' Exp .
+
+    $default  reduce using rule 97 (FuncRParams)
+
+
+State 199
+
+   61 LExp: LExp '[' Exp ']' .
+
+    $default  reduce using rule 61 (LExp)
+
+
+State 200
+
+   56 FuncFParam: INT Ident '[' ']' LExp .
+   61 LExp: LExp . '[' Exp ']'
+
+    '['  shift, and go to state 138
+
+    $default  reduce using rule 56 (FuncFParam)
+
+
+State 201
+
+   59 FuncFParam: INT WrongIdent '[' ']' LExp .
+   61 LExp: LExp . '[' Exp ']'
+
+    '['  shift, and go to state 138
+
+    $default  reduce using rule 59 (FuncFParam)
+
+
+State 202
+
+   72 Stmt: IF '(' Cond . ')' Stmt
+   73     | IF '(' Cond . ')' Stmt ELSE Stmt
+
+    ')'  shift, and go to state 211
+
+
+State 203
+
+  103 AddExp: AddExp . '+' MulExp
+  104       | AddExp . '-' MulExp
+  105 RelExp: AddExp .
+
+    '+'  shift, and go to state 105
+    '-'  shift, and go to state 106
+
+    $default  reduce using rule 105 (RelExp)
+
+
+State 204
+
+  106 RelExp: RelExp . '<' AddExp
+  107       | RelExp . '>' AddExp
+  108       | RelExp . GEQ AddExp
+  109       | RelExp . LEQ AddExp
+  110 EqExp: RelExp .
+
+    '>'  shift, and go to state 212
+    '<'  shift, and go to state 213
+    LEQ  shift, and go to state 214
+    GEQ  shift, and go to state 215
+
+    $default  reduce using rule 110 (EqExp)
+
+
+State 205
+
+  111 EqExp: EqExp . EQ RelExp
+  112      | EqExp . NEQ RelExp
+  113 LAndExp: EqExp .
+
+    NEQ  shift, and go to state 216
+    EQ   shift, and go to state 217
+
+    $default  reduce using rule 113 (LAndExp)
+
+
+State 206
+
+  114 LAndExp: LAndExp . AND EqExp
+  115 LOrExp: LAndExp .
+
+    AND  shift, and go to state 218
+
+    $default  reduce using rule 115 (LOrExp)
+
+
+State 207
+
+   80 Cond: LOrExp .
+  116 LOrExp: LOrExp . OR LAndExp
+
+    OR  shift, and go to state 219
+
+    $default  reduce using rule 80 (Cond)
+
+
+State 208
+
+   74 Stmt: WHILE '(' Cond . ')' Stmt
+
+    ')'  shift, and go to state 220
+
+
+State 209
+
+   77 Stmt: RETURN Exp ';' .
+
+    $default  reduce using rule 77 (Stmt)
+
+
+State 210
+
+   68 Stmt: LVal '=' Exp . ';'
+
+    ';'  shift, and go to state 221
+
+
+State 211
+
+   72 Stmt: IF '(' Cond ')' . Stmt
+   73     | IF '(' Cond ')' . Stmt ELSE Stmt
+
+    IF          shift, and go to state 153
+    WHILE       shift, and go to state 154
+    BREAK       shift, and go to state 155
+    CONTINUE    shift, and go to state 156
+    RETURN      shift, and go to state 157
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    ';'         shift, and go to state 158
+    '{'         shift, and go to state 111
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    Block       go to state 161
+    Stmt        go to state 222
+    Exp         go to state 165
+    LVal        go to state 166
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 212
+
+  107 RelExp: RelExp '>' . AddExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 223
+
+
+State 213
+
+  106 RelExp: RelExp '<' . AddExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 224
+
+
+State 214
+
+  109 RelExp: RelExp LEQ . AddExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 225
+
+
+State 215
+
+  108 RelExp: RelExp GEQ . AddExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 226
+
+
+State 216
+
+  112 EqExp: EqExp NEQ . RelExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 203
+    RelExp      go to state 227
+
+
+State 217
+
+  111 EqExp: EqExp EQ . RelExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 203
+    RelExp      go to state 228
+
+
+State 218
+
+  114 LAndExp: LAndExp AND . EqExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 203
+    RelExp      go to state 204
+    EqExp       go to state 229
+
+
+State 219
+
+  116 LOrExp: LOrExp OR . LAndExp
+
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    LVal        go to state 53
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 203
+    RelExp      go to state 204
+    EqExp       go to state 205
+    LAndExp     go to state 230
+
+
+State 220
+
+   74 Stmt: WHILE '(' Cond ')' . Stmt
+
+    IF          shift, and go to state 153
+    WHILE       shift, and go to state 154
+    BREAK       shift, and go to state 155
+    CONTINUE    shift, and go to state 156
+    RETURN      shift, and go to state 157
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    ';'         shift, and go to state 158
+    '{'         shift, and go to state 111
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    Block       go to state 161
+    Stmt        go to state 231
+    Exp         go to state 165
+    LVal        go to state 166
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 221
+
+   68 Stmt: LVal '=' Exp ';' .
+
+    $default  reduce using rule 68 (Stmt)
+
+
+State 222
+
+   72 Stmt: IF '(' Cond ')' Stmt .
+   73     | IF '(' Cond ')' Stmt . ELSE Stmt
+
+    ELSE  shift, and go to state 232
+
+    $default  reduce using rule 72 (Stmt)
+
+
+State 223
+
+  103 AddExp: AddExp . '+' MulExp
+  104       | AddExp . '-' MulExp
+  107 RelExp: RelExp '>' AddExp .
+
+    '+'  shift, and go to state 105
+    '-'  shift, and go to state 106
+
+    $default  reduce using rule 107 (RelExp)
+
+
+State 224
+
+  103 AddExp: AddExp . '+' MulExp
+  104       | AddExp . '-' MulExp
+  106 RelExp: RelExp '<' AddExp .
+
+    '+'  shift, and go to state 105
+    '-'  shift, and go to state 106
+
+    $default  reduce using rule 106 (RelExp)
+
+
+State 225
+
+  103 AddExp: AddExp . '+' MulExp
+  104       | AddExp . '-' MulExp
+  109 RelExp: RelExp LEQ AddExp .
+
+    '+'  shift, and go to state 105
+    '-'  shift, and go to state 106
+
+    $default  reduce using rule 109 (RelExp)
+
+
+State 226
+
+  103 AddExp: AddExp . '+' MulExp
+  104       | AddExp . '-' MulExp
+  108 RelExp: RelExp GEQ AddExp .
+
+    '+'  shift, and go to state 105
+    '-'  shift, and go to state 106
+
+    $default  reduce using rule 108 (RelExp)
+
+
+State 227
+
+  106 RelExp: RelExp . '<' AddExp
+  107       | RelExp . '>' AddExp
+  108       | RelExp . GEQ AddExp
+  109       | RelExp . LEQ AddExp
+  112 EqExp: EqExp NEQ RelExp .
+
+    '>'  shift, and go to state 212
+    '<'  shift, and go to state 213
+    LEQ  shift, and go to state 214
+    GEQ  shift, and go to state 215
+
+    $default  reduce using rule 112 (EqExp)
+
+
+State 228
+
+  106 RelExp: RelExp . '<' AddExp
+  107       | RelExp . '>' AddExp
+  108       | RelExp . GEQ AddExp
+  109       | RelExp . LEQ AddExp
+  111 EqExp: EqExp EQ RelExp .
+
+    '>'  shift, and go to state 212
+    '<'  shift, and go to state 213
+    LEQ  shift, and go to state 214
+    GEQ  shift, and go to state 215
+
+    $default  reduce using rule 111 (EqExp)
+
+
+State 229
+
+  111 EqExp: EqExp . EQ RelExp
+  112      | EqExp . NEQ RelExp
+  114 LAndExp: LAndExp AND EqExp .
+
+    NEQ  shift, and go to state 216
+    EQ   shift, and go to state 217
+
+    $default  reduce using rule 114 (LAndExp)
+
+
+State 230
+
+  114 LAndExp: LAndExp . AND EqExp
+  116 LOrExp: LOrExp OR LAndExp .
+
+    AND  shift, and go to state 218
+
+    $default  reduce using rule 116 (LOrExp)
+
+
+State 231
+
+   74 Stmt: WHILE '(' Cond ')' Stmt .
+
+    $default  reduce using rule 74 (Stmt)
+
+
+State 232
+
+   73 Stmt: IF '(' Cond ')' Stmt ELSE . Stmt
+
+    IF          shift, and go to state 153
+    WHILE       shift, and go to state 154
+    BREAK       shift, and go to state 155
+    CONTINUE    shift, and go to state 156
+    RETURN      shift, and go to state 157
+    Ident       shift, and go to state 43
+    WrongIdent  shift, and go to state 44
+    INTCONST    shift, and go to state 45
+    '+'         shift, and go to state 46
+    '-'         shift, and go to state 47
+    ';'         shift, and go to state 158
+    '{'         shift, and go to state 111
+    '('         shift, and go to state 49
+    '!'         shift, and go to state 50
+
+    Block       go to state 161
+    Stmt        go to state 233
+    Exp         go to state 165
+    LVal        go to state 166
+    PrimaryExp  go to state 54
+    UnaryExp    go to state 55
+    MulExp      go to state 56
+    AddExp      go to state 57
+
+
+State 233
+
+   73 Stmt: IF '(' Cond ')' Stmt ELSE Stmt .
+
+    $default  reduce using rule 73 (Stmt)

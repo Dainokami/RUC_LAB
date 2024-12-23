@@ -1,0 +1,378 @@
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+ConstArrIdex -> [ ConstExp ]
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+ConstArrIdex -> ConstArrIdex [ ConstExp ]
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+ConstInitVal -> ConstExp
+OtherConstInitVal -> ConstInitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+ConstInitVal -> ConstExp
+OtherConstInitVal -> OtherConstInitVal , ConstInitVal
+ConstInitVal -> { OtherConstInitVal }
+OtherConstInitVal -> ConstInitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+ConstInitVal -> ConstExp
+OtherConstInitVal -> ConstInitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+ConstInitVal -> ConstExp
+OtherConstInitVal -> OtherConstInitVal , ConstInitVal
+ConstInitVal -> { OtherConstInitVal }
+OtherConstInitVal -> OtherConstInitVal , ConstInitVal
+ConstInitVal -> { }
+OtherConstInitVal -> OtherConstInitVal , ConstInitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+ConstInitVal -> ConstExp
+OtherConstInitVal -> OtherConstInitVal , ConstInitVal
+ConstInitVal -> { OtherConstInitVal }
+OtherConstDef -> Ident ConstArrIdex = ConstInitVal
+ConstDef -> OtherConstDef
+ConstDecl -> const int ConstDef ;
+Decl -> ConstDecl
+BlockItem -> Decl
+Blocks -> BlockItem
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+ConstInitVal -> ConstExp
+OtherConstDef -> Ident = ConstInitVal
+ConstDef -> OtherConstDef
+ConstDecl -> const int ConstDef ;
+Decl -> ConstDecl
+BlockItem -> Decl
+Blocks -> Blocks BlockItem
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+VarArrIdex -> [ ConstExp ]
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+VarArrIdex -> VarArrIdex [ ConstExp ]
+InitVal -> { }
+OtherVarDef -> Ident VarArrIdex = InitVal
+VarDef -> OtherVarDef
+VarDecl -> int VarDef ;
+Decl -> VarDecl
+BlockItem -> Decl
+Blocks -> Blocks BlockItem
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+VarArrIdex -> [ ConstExp ]
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+VarArrIdex -> VarArrIdex [ ConstExp ]
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> OtherVarInitVal , InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> OtherVarInitVal , InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> OtherVarInitVal , InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> OtherVarInitVal , InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> OtherVarInitVal , InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> OtherVarInitVal , InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> OtherVarInitVal , InitVal
+InitVal -> { OtherVarInitVal }
+OtherVarDef -> Ident VarArrIdex = InitVal
+VarDef -> OtherVarDef
+VarDecl -> int VarDef ;
+Decl -> VarDecl
+BlockItem -> Decl
+Blocks -> Blocks BlockItem
+LVal -> Ident
+PrimaryExp -> LVal
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> AddExp + MulExp
+ConstExp -> AddExp
+VarArrIdex -> [ ConstExp ]
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+VarArrIdex -> VarArrIdex [ ConstExp ]
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> OtherVarInitVal , InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> InitVal
+InitVal -> { OtherVarInitVal }
+OtherVarInitVal -> OtherVarInitVal , InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> InitVal
+InitVal -> { OtherVarInitVal }
+OtherVarInitVal -> OtherVarInitVal , InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+LExp -> [ Exp ]
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+LExp -> LExp [ Exp ]
+LVal -> Ident LExp
+PrimaryExp -> LVal
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> OtherVarInitVal , InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> OtherVarInitVal , InitVal
+InitVal -> { OtherVarInitVal }
+OtherVarDef -> Ident VarArrIdex = InitVal
+VarDef -> OtherVarDef
+VarDecl -> int VarDef ;
+Decl -> VarDecl
+BlockItem -> Decl
+Blocks -> Blocks BlockItem
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+VarArrIdex -> [ ConstExp ]
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+VarArrIdex -> VarArrIdex [ ConstExp ]
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+ConstExp -> AddExp
+VarArrIdex -> VarArrIdex [ ConstExp ]
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+LExp -> [ Exp ]
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+LExp -> LExp [ Exp ]
+LVal -> Ident LExp
+PrimaryExp -> LVal
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+LExp -> [ Exp ]
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+LExp -> LExp [ Exp ]
+LVal -> Ident LExp
+PrimaryExp -> LVal
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> InitVal
+InitVal -> { OtherVarInitVal }
+OtherVarInitVal -> OtherVarInitVal , InitVal
+InitVal -> { OtherVarInitVal }
+OtherVarInitVal -> InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> OtherVarInitVal , InitVal
+InitVal -> { OtherVarInitVal }
+OtherVarInitVal -> OtherVarInitVal , InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> OtherVarInitVal , InitVal
+InitVal -> { OtherVarInitVal }
+OtherVarInitVal -> OtherVarInitVal , InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> InitVal
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+InitVal -> Exp
+OtherVarInitVal -> OtherVarInitVal , InitVal
+InitVal -> { OtherVarInitVal }
+OtherVarInitVal -> OtherVarInitVal , InitVal
+InitVal -> { OtherVarInitVal }
+OtherVarDef -> Ident VarArrIdex = InitVal
+VarDef -> OtherVarDef
+VarDecl -> int VarDef ;
+Decl -> VarDecl
+BlockItem -> Decl
+Blocks -> Blocks BlockItem
+PrimaryExp -> IntConst
+UnaryExp -> PrimaryExp
+MulExp -> UnaryExp
+AddExp -> MulExp
+Exp -> AddExp
+Stmt -> return Exp ;
+BlockItem -> Stmt
+Blocks -> Blocks BlockItem
+Block -> { Blocks }
+FuncDef -> int Ident ( ) Block
+OtherCompUnit -> FuncDef
+CompUnits -> OtherCompUnit
